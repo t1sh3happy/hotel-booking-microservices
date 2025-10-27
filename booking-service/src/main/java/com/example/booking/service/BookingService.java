@@ -55,7 +55,6 @@ public class BookingService {
             roomId = selectBestAvailableRoom(correlationId);
             log.info("[{}] Auto-selected room ID: {}", correlationId, roomId);
         } else {
-            // Ручной выбор номера
             if (roomId == null) {
                 throw new IllegalArgumentException("Room ID is required when autoSelect is false");
             }
@@ -82,16 +81,13 @@ public class BookingService {
         );
 
         try {
-            // Удержание слота (hold)
             callHotel("/rooms/" + roomId + "/hold", payload, correlationId).block(timeout);
-            // Подтверждение (confirm)
             callHotel("/rooms/" + roomId + "/confirm", Map.of("requestId", requestId), correlationId).block(timeout);
             booking.setStatus(Booking.Status.CONFIRMED);
             bookingRepository.save(booking);
             log.info("[{}] Booking CONFIRMED", correlationId);
         } catch (Exception e) {
             log.warn("[{}] Booking flow failed: {}", correlationId, e.toString());
-            // Компенсация (release) при ошибке
             try { callHotel("/rooms/" + roomId + "/release", Map.of("requestId", requestId), correlationId).block(timeout); } catch (Exception ignored) {}
             booking.setStatus(Booking.Status.CANCELLED);
             bookingRepository.save(booking);
@@ -110,7 +106,6 @@ public class BookingService {
                 throw new IllegalStateException("No available rooms for the selected dates");
             }
 
-            // Возвращаем первый номер (уже отсортирован по timesBooked)
             RoomView selectedRoom = rooms.get(0);
             log.info("[{}] Selected room {} with {} bookings",
                     correlationId, selectedRoom.id(), selectedRoom.timesBooked());

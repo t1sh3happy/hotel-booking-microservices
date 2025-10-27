@@ -11,7 +11,7 @@ public class User {
 
     private String username;
     private String passwordHash;
-    private String role; // USER или ADMIN
+    private String role;
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }

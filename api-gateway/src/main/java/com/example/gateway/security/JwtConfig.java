@@ -11,7 +11,6 @@ public class JwtConfig {
 
     @Bean
     public JwtDecoder jwtDecoder(@Value("${security.jwt.secret:dev-secret-please-change}") String secret) {
-        // Декодер JWT с симметричным ключом HMAC для демонстрационных целей
         return NimbusJwtDecoder.withSecretKey(JwtSecretKeyProvider.getHmacKey(secret)).build();
     }
 }

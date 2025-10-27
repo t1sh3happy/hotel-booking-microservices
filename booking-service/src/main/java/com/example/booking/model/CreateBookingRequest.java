@@ -7,7 +7,7 @@ public class CreateBookingRequest {
     private Long roomId;
     private LocalDate startDate;
     private LocalDate endDate;
-    private boolean autoSelect = false;  // ✅ НОВОЕ ПОЛЕ
+    private boolean autoSelect = false;
 
     public CreateBookingRequest() {
     }

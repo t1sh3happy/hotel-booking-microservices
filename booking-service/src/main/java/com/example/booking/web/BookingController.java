@@ -1,7 +1,7 @@
 package com.example.booking.web;
 
 import com.example.booking.model.Booking;
-import com.example.booking.model.CreateBookingRequest;  // ✅ ДОБАВИТЬ IMPORT
+import com.example.booking.model.CreateBookingRequest;
 import com.example.booking.repo.BookingRepository;
 import com.example.booking.service.BookingService;
 import org.springframework.http.ResponseEntity;
@@ -28,11 +28,11 @@ public class BookingController {
     @PostMapping
     public Booking create(@AuthenticationPrincipal Jwt jwt, @RequestBody CreateBookingRequest req) {
         Long userId = Long.parseLong(jwt.getSubject());
-        Long roomId = req.getRoomId();  // ✅ ИЗМЕНЕНО
-        LocalDate start = req.getStartDate();  // ✅ ИЗМЕНЕНО
-        LocalDate end = req.getEndDate();  // ✅ ИЗМЕНЕНО
-        String requestId = req.getRequestId();  // ✅ ИЗМЕНЕНО
-        boolean autoSelect = req.isAutoSelect();  // ✅ НОВОЕ
+        Long roomId = req.getRoomId();
+        LocalDate start = req.getStartDate();
+        LocalDate end = req.getEndDate();
+        String requestId = req.getRequestId();
+        boolean autoSelect = req.isAutoSelect();
 
         return bookingService.createBooking(userId, roomId, start, end, requestId, autoSelect);
     }

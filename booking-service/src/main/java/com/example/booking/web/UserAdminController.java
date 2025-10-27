@@ -61,7 +61,6 @@ public class UserAdminController {
         return ResponseEntity.ok().build();
     }
 
-    // Старые методы можно оставить для дополнительного функционала
     @GetMapping
     public ResponseEntity<Map<String, Object>> list() {
         return ResponseEntity.ok(Map.of("users", userRepository.findAll()));

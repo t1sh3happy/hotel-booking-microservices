@@ -11,7 +11,7 @@ public class Booking {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String requestId; // idempotency key per request
+    private String requestId;
 
     private Long userId;
     private Long roomId;
@@ -21,7 +21,7 @@ public class Booking {
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    private String correlationId; // bookingId for logs
+    private String correlationId;
 
     private OffsetDateTime createdAt;
 

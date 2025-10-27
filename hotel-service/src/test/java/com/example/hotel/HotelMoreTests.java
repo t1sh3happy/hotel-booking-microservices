@@ -40,7 +40,6 @@ public class HotelMoreTests {
         LocalDate e1 = s1.plusDays(2);
         hotelService.holdRoom("req-a", r.getId(), s1, e1);
 
-        // пересечение дат
         Assertions.assertThrows(IllegalStateException.class, () ->
                 hotelService.holdRoom("req-b", r.getId(), s1.plusDays(1), e1.plusDays(1))
         );
@@ -60,7 +59,7 @@ public class HotelMoreTests {
         r.setAvailable(false);
         r = hotelService.saveRoom(r);
 
-        // Даже если available=false, занятость по датам определяется блокировками/бронями
+
         LocalDate s1 = LocalDate.now();
         LocalDate e1 = s1.plusDays(1);
         RoomReservationLock lock = hotelService.holdRoom("req-c", r.getId(), s1, e1);
@@ -85,7 +84,6 @@ public class HotelMoreTests {
         r2.setCapacity(2);
         r2 = hotelService.saveRoom(r2);
 
-        // имитируем подтверждения
         hotelService.holdRoom("req-d", r1.getId(), LocalDate.now(), LocalDate.now().plusDays(1));
         hotelService.confirmHold("req-d");
         hotelService.holdRoom("req-e", r1.getId(), LocalDate.now().plusDays(2), LocalDate.now().plusDays(3));

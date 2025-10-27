@@ -49,7 +49,6 @@ public class HotelAvailabilityTests {
         RoomReservationLock afterConfirm = hotelService.confirmHold(req);
         Assertions.assertEquals(RoomReservationLock.Status.CONFIRMED, afterConfirm.getStatus());
 
-        // Освобождение после подтверждения должно быть no-op согласно реализации
         RoomReservationLock afterRelease = hotelService.releaseHold(req);
         Assertions.assertEquals(RoomReservationLock.Status.CONFIRMED, afterRelease.getStatus());
     }
